@@ -7,12 +7,20 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Automobile Management System</title>
-<script type="text/javascript">
-function showTime(){
-	var today = new Date();
-	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()   + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-	alert(date);
-}
+ <meta charset="utf-8">
+  <meta http-equiv="Cache-control" content="no-cache">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+<script>
+$(document).ready(function(){
+	  $("#ShowAttendance").click(function(){
+	    $("#DisplayAttendance").load("processAttendance");
+	  });
+	});
+
 
 </script>
 </head>
@@ -22,10 +30,11 @@ function showTime(){
 		<br><br>
 		Password: <form:input type="password" path="password" />
 		<br><br>
-		<input type="submit" value="Submit" onclick="showTime()"/>	
+		${message }
+		<button id="ShowAttendance">Submit</button>
 	</form:form>
+	<div id="DisplayAttendance"></div>
 	
-	${displayTime }
 </body>
 </html>
 

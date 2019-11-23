@@ -33,10 +33,18 @@ public class AdminController {
 	public ModelAndView processAttendance(GetAttendance attendance) {
 		System.out.println(attendance);
 		String time = adminService.getTime(attendance);
-		ModelAndView model = new ModelAndView("employee_enter_attendance");
-		GetAttendance attendance2 = new GetAttendance();
-		model.addObject("attendance", attendance2);
-		model.addObject("displayTime", time);
-		return model;
+		if(time == null) {
+			ModelAndView mav = new ModelAndView("employee_enter_attendance");
+			GetAttendance login = new GetAttendance();
+			mav.addObject("attendance", login);
+			mav.addObject("message", "Invalid Username or Password!");
+			return mav;
+		}
+			
+		ModelAndView mav = new ModelAndView("show_attendance");
+//		GetAttendance attendance2 = new GetAttendance();
+//		mav.addObject("attendance", attendance2);
+		mav.addObject("displayTime", time);
+		return mav;
 	}
 }

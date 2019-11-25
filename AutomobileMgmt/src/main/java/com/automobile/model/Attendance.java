@@ -2,56 +2,75 @@ package com.automobile.model;
 
 public class Attendance {
 
-	private int employee_id;
-	private String t_date;
-	private String in_time;
-	private String out_time;
-	private double worked_hours;
+	private String employeeId;
+	private String inDate;
+	private String inTime;
+	private String outDate;
+	private String outTime;
+	private String workedHours;
+	private String activeStatus;
 
-	public int getEmployee_id() {
-		return employee_id;
+	public String getEmployeeId() {
+		return employeeId;
 	}
 
-	public void setEmployee_id(int employee_id) {
-		this.employee_id = employee_id;
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
 	}
 
-	public String getT_date() {
-		return t_date;
+	public String getInDate() {
+		return inDate;
 	}
 
-	public void setT_date(String t_date) {
-		this.t_date = t_date;
+	public void setInDate(String inDate) {
+		this.inDate = inDate;
 	}
 
-	public String getIn_time() {
-		return in_time;
+	public String getInTime() {
+		return inTime;
 	}
 
-	public void setIn_time(String in_time) {
-		this.in_time = in_time;
+	public void setInTime(String inTime) {
+		this.inTime = inTime;
 	}
 
-	public String getOut_time() {
-		return out_time;
+	public String getOutDate() {
+		return outDate;
 	}
 
-	public void setOut_time(String out_time) {
-		this.out_time = out_time;
+	public void setOutDate(String outDate) {
+		this.outDate = outDate;
 	}
 
-	public double getWorked_hours() {
-		return worked_hours;
+	public String getOutTime() {
+		return outTime;
 	}
 
-	public void setWorked_hours(double worked_hours) {
-		this.worked_hours = worked_hours;
+	public void setOutTime(String outTime) {
+		this.outTime = outTime;
+	}
+
+	public String getWorkedHours() {
+		return workedHours;
+	}
+
+	public void setWorkedHours(String workedHours) {
+		this.workedHours = workedHours;
+	}
+
+	public String getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(String activeStatus) {
+		this.activeStatus = activeStatus;
 	}
 
 	@Override
 	public String toString() {
-		return "Attendance [employee_id=" + employee_id + ", t_date=" + t_date + ", in_time=" + in_time + ", out_time="
-				+ out_time + ", worked_hours=" + worked_hours + "]";
+		return "Attendance [employeeId=" + employeeId + ", inDate=" + inDate + ", inTime=" + inTime + ", outDate="
+				+ outDate + ", outTime=" + outTime + ", workedHours=" + workedHours + ", activeStatus=" + activeStatus
+				+ "]";
 	}
 
 }

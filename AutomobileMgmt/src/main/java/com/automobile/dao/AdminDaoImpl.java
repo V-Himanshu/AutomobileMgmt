@@ -2,7 +2,6 @@ package com.automobile.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -12,81 +11,75 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.automobile.model.Attendance;
-import com.automobile.model.GetAttendance;
+import com.automobile.model.Login;
 
 public class AdminDaoImpl implements AdminDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	public String getTime(GetAttendance getAttendance) {
-		
-		//Bug: It doesn't update the previous day out time and worked hours if user 
-		//entered work place on one day and leaves the work place another day
+	/**
+	 * Check Login credentials to provide attendance for intended users.
+	 */
+	public boolean checkCredentials(Login login) {
 
-		/**
-		 * Check for valid user credentials.
-		 */
-		String verify = "select * from login where employee_id = ? and password = ?";
-		List<GetAttendance> list1 = jdbcTemplate.query(verify,
-				new Object[] { getAttendance.getUsername(), getAttendance.getPassword() },
-				new RowMapper<GetAttendance>() {
-					public GetAttendance mapRow(ResultSet rs, int rowNum) throws SQLException {
-						GetAttendance login = new GetAttendance();
-						login.setUsername("" + rs.getInt("employee_id"));
-						login.setPassword(rs.getString("password"));
-						return login;
+		String sql = "Select * from login where employee_id=? and password=?";
+		List<Login> loginList = jdbcTemplate.query(sql, new Object[] { login.getUsername(), login.getPassword() },
+				new RowMapper<Login>() {
+
+					public Login mapRow(ResultSet rs, int rowNum) throws SQLException {
+						Login credentials = new Login();
+						credentials.setUsername(rs.getString("employee_id"));
+						credentials.setPassword(rs.getString("password"));
+						return credentials;
 					}
-
 				});
-		if (list1.size() == 0) {
-			return null;
-		}
+		if (loginList.size() > 0)
+			return true;
+		return false;
 
-		String sql = "select * from attendance where employee_id = ? and t_date = ?";
-		List<Attendance> list = jdbcTemplate.query(sql,
-				new Object[] { getAttendance.getUsername(), java.sql.Date.valueOf(LocalDate.now()) },
+	}
+
+	/**
+	 * Return list with employee values to check whether In-date for employee
+	 * already updated or not. If not done, list returns null values.
+	 */
+	public List<Attendance> checkAttendance(Login login, LocalDate date) {
+		String sql = "select * from attendance where employee_id=? and in_date=?";
+		List<Attendance> attendance = jdbcTemplate.query(sql, new Object[] { login.getUsername(), "" + date },
 				new RowMapper<Attendance>() {
+
 					public Attendance mapRow(ResultSet rs, int rowNum) throws SQLException {
 						Attendance attendance = new Attendance();
-						attendance.setEmployee_id(rs.getInt("employee_id"));
-						attendance.setT_date(rs.getString("t_date"));
-						attendance.setIn_time(rs.getString("in_time"));
-						attendance.setOut_time(rs.getString("out_time"));
-						attendance.setWorked_hours(rs.getDouble("worked_hours"));
+						attendance.setEmployeeId(rs.getString("employee_id"));
+						attendance.setInDate(rs.getString("in_date"));
+						attendance.setInTime(rs.getString("in_time"));
+						attendance.setOutDate(rs.getString("out_date"));
+						attendance.setOutTime(rs.getString("out_time"));
+						attendance.setWorkedHours(rs.getString("worked_hours"));
+						attendance.setActiveStatus(rs.getString("active_status"));
 						return attendance;
 					}
-
 				});
+		return attendance;
 
-		/**
-		 * Update attendance based on date. If no employee_id found on particular date,
-		 * create one or else update out time. After Updating out time, it also updates Worked hours.
-		 */
+	}
 
-		if (list.size() > 0) {
+	/**
+	 * Inserting new row of employee for particular day's attendance.
+	 */
+	public void updateInDetails(Login login, LocalDate localDate, LocalTime localTime) {
+		String sql = "insert into attendance(employee_id, in_date, in_time) values(?,?,?)";
+		jdbcTemplate.update(sql, new Object[] { login.getUsername(), "" + localDate, "" + localTime });
+	}
 
-			LocalTime from = LocalTime.parse(list.get(0).getIn_time());
-			LocalTime to = LocalTime.now();
-			Duration d = Duration.between(from, to);
-
-			String workedHours = d.toHours() + ":" + d.toMinutes();
-
-			String sql2 = "update attendance set out_time=?, worked_hours=? where employee_id=? and t_date = ?";
-			jdbcTemplate.update(sql2, new Object[] { java.sql.Time.valueOf(to), workedHours,
-					Integer.parseInt(getAttendance.getUsername()), java.sql.Date.valueOf(LocalDate.now()) });
-			System.out.println("out time");
-
-			return "Out time: " + to;
-
-		} else {
-			System.out.println("In time");
-			String sql1 = "insert into attendance (employee_id,t_date,in_time) values (?,?,?)";
-			jdbcTemplate.update(sql1, new Object[] { getAttendance.getUsername(),
-					java.sql.Date.valueOf(LocalDate.now()), java.sql.Time.valueOf(LocalTime.now()) });
-			return "In time: " + LocalTime.now();
-		}
-
+	/**
+	 * Updating attendance of employee with Out-date, Out-time, active_status and
+	 * workedHours.
+	 */
+	public void updateOutDetails(Login login, LocalDate localDate, LocalTime localTime, String workedHours) {
+		String sql = "update attendance set out_date=?, out_time=?, worked_hours=?, active_status='n' where employee_id=?";
+		jdbcTemplate.update(sql, new Object[] { "" + localDate, "" + localTime, workedHours, login.getUsername() });
 	}
 
 }

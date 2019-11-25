@@ -1,9 +1,13 @@
 package com.automobile.service;
 
-import com.automobile.model.GetAttendance;
+import com.automobile.model.Login;
 
 public interface AdminService {
 
-	String getTime(GetAttendance attendance);
+	boolean checkCredentials(Login login);
+
+	String addAttendance(Login login);
+
+	
 
 }

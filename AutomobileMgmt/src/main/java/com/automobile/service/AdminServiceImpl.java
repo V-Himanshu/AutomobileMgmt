@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.automobile.dao.AdminDao;
 import com.automobile.model.Attendance;
+import com.automobile.model.Employee;
 import com.automobile.model.Login;
+import com.automobile.model.SearchAttendance;
 
 public class AdminServiceImpl implements AdminService {
 
@@ -52,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
 			long absSeconds = Math.abs(d.getSeconds());
 			String workedHours = String.format("%d:%d", absSeconds / 3600, (absSeconds % 3600) / 60);
 
-			adminDao.updateOutDetails(login, localDate, localTime, workedHours);
+			adminDao.updateOutDetails(login, localDate, localTime, workedHours, list.get(0).getInDate());
 
 			output = "Out-Date: " + localDate + "\n" + "Out-Time: " + localTime;
 			return output;
@@ -65,6 +67,16 @@ public class AdminServiceImpl implements AdminService {
 
 		output = "In-Date: " + localDate + "\n" + "In-Time: " + localTime;
 		return output;
+	}
+
+	public List<Employee> searchEmployee(Employee employee) {
+		return adminDao.searchEmployee(employee);
+	}
+
+	public List<Attendance> searchAttendance(SearchAttendance searchAttendance) {
+		List<Attendance> list = adminDao.searchAttendance(searchAttendance);
+		return list;
+		//calculate no. of working days to leave days.
 	}
 
 }

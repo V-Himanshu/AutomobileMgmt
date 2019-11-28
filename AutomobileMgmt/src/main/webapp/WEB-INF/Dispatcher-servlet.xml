@@ -17,9 +17,9 @@
 	<context:annotation-config />
 	
 	
-	<bean id="adminService" class="com.automobile.service.AdminServiceImpl" />
+	<bean id="attendanceService" class="com.automobile.service.AttendanceServiceImpl" />
 	
-	<bean id="adminDao" class="com.automobile.dao.AdminDaoImpl" />
+	<bean id="attendanceDao" class="com.automobile.dao.AttendanceDaoImpl" />
 	
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="datasource" />

@@ -12,6 +12,16 @@
 
 </head>
 <body>
+
+	<%
+		response.setHeader("Cache-control", "no-cache, no-store, must validate");
+	%>
+	<%
+		response.setHeader("Pragma", "no-cache");
+	%>
+	<%
+		response.setDateHeader("Expires", 0);
+	%>
 	<form:form action="processAttendance" modelAttribute="attendance"
 		method="post">
 		Employee ID: <form:input type="text" path="username" />
@@ -22,10 +32,12 @@
 		<br>
 		${message }
 		<br>
-		<input type="submit" value="Submit"/>
+		<input type="submit" value="Submit" />
 	</form:form>
+<button onclick="window.location.href='login';">Back</button>
 
-
+	${displayTime }
+	<a href="employee_enter_attendance">${close }</a>
 
 </body>
 </html>

@@ -9,6 +9,7 @@
 <title>Automobile Management System</title>
 </head>
 <body>
+
 	<%
 		response.setHeader("Cache-control", "no-cache, no-store, must validate");
 	%>
@@ -18,19 +19,17 @@
 	<%
 		response.setDateHeader("Expires", 0);
 	%>
-
-	<form:form action="searchAttendance" modelAttribute="searchAttendance">
-		<input type="text" value="${employee_id }" name="employeeId"
-			readonly="readonly" />
+	<form:form action="employeeSearchAttendance"
+		modelAttribute="searchAttendance">
 		<form:input type="date" path="fromDate" />
 		<form:input type="date" path="toDate" />
 		<input type="submit" value="Search" />
 	</form:form>
-<button onclick="window.location.href='admin_view_attendance';">Back</button>
+<button onclick="window.location.href='home';">Back</button>
 
 	<table>
 		<tr>
-			<th>Employee Id</th>
+
 			<th>In Date</th>
 			<th>In Time</th>
 			<th>Out Date</th>
@@ -40,7 +39,7 @@
 		</tr>
 		<c:forEach var="attendance" items="${attendanceList }">
 			<tr>
-				<td>${attendance.getEmployeeId() }</td>
+
 				<td>${attendance.getInDate() }</td>
 				<td>${attendance.getInTime() }</td>
 				<td>${attendance.getOutDate() }</td>
@@ -68,6 +67,5 @@
 		</tr>
 
 	</table>
-
 </body>
 </html>

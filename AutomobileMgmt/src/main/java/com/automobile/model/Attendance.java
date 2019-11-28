@@ -9,6 +9,25 @@ public class Attendance {
 	private String outTime;
 	private String workedHours;
 	private String activeStatus;
+	
+	
+
+	public Attendance() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Attendance(String employeeId, String inDate, String inTime, String outDate, String outTime,
+			String workedHours, String activeStatus) {
+		super();
+		this.employeeId = employeeId;
+		this.inDate = inDate;
+		this.inTime = inTime;
+		this.outDate = outDate;
+		this.outTime = outTime;
+		this.workedHours = workedHours;
+		this.activeStatus = activeStatus;
+	}
 
 	public String getEmployeeId() {
 		return employeeId;

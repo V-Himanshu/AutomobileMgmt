@@ -12,14 +12,14 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-	<context:component-scan base-package="com.automobile" />
+	<context:component-scan base-package="com.ams" />
 
 	<context:annotation-config />
 	
 	
-	<bean id="attendanceService" class="com.automobile.service.AttendanceServiceImpl" />
+	<bean id="attendanceService" class="com.ams.admin.service.AttendanceServiceImpl" />
 	
-	<bean id="attendanceDao" class="com.automobile.dao.AttendanceDaoImpl" />
+	<bean id="attendanceDao" class="com.ams.admin.dao.AttendanceDaoImpl" />
 	
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="datasource" />

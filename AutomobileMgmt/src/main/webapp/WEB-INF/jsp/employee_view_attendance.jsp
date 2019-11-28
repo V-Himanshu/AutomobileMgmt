@@ -25,6 +25,9 @@
 		<form:input type="date" path="toDate" />
 		<input type="submit" value="Search" />
 	</form:form>
+	<br>
+	${message }
+	<br>
 <button onclick="window.location.href='home';">Back</button>
 
 	<table>

@@ -26,11 +26,13 @@
 		<form:input type="date" path="toDate" />
 		<input type="submit" value="Search" />
 	</form:form>
+	<br>
+	${message }
+	<br>
 <button onclick="window.location.href='admin_view_attendance';">Back</button>
 
 	<table>
 		<tr>
-			<th>Employee Id</th>
 			<th>In Date</th>
 			<th>In Time</th>
 			<th>Out Date</th>
@@ -40,7 +42,6 @@
 		</tr>
 		<c:forEach var="attendance" items="${attendanceList }">
 			<tr>
-				<td>${attendance.getEmployeeId() }</td>
 				<td>${attendance.getInDate() }</td>
 				<td>${attendance.getInTime() }</td>
 				<td>${attendance.getOutDate() }</td>

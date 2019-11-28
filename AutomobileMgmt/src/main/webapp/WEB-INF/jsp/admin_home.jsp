@@ -23,5 +23,8 @@
 	<button onclick="window.location.href='view_employee';">View
 		Employee</button>
 	<button onclick="window.location.href='admin_view_attendance';">Attendance</button>
+	
+	
+	<a href="logout">Logout</a>
 </body>
 </html>
